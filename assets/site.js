@@ -30,10 +30,9 @@
       { t: 'Formulation', href: 'science.html', i: 'flask' },
       { t: 'Comparison', href: 'science.html#compare', i: 'scale' },
       { t: 'Testing', href: 'testing.html', i: 'check' },
-      { t: 'Safety', href: 'testing.html#safety', i: 'shield' } ] },
-    { label: 'Team', href: 'team.html' }
+      { t: 'Safety', href: 'testing.html#safety', i: 'shield' } ] }
   ];
-  var LOGO = '<svg class="sitenav__logo" viewBox="0 0 44 44" aria-hidden="true"><rect width="44" height="44" fill="#0c3a3d"/><path d="M0 30c8-4 14 3 22 0s14-4 22 0v14H0z" fill="#2fa39a"/><circle cx="15" cy="20" r="5" fill="#fff"/><circle cx="29" cy="17" r="8" fill="#fbe9dc" stroke="#e07a3c" stroke-width="2"/></svg>';
+  var LOGO = '<svg class="sitenav__logo" viewBox="0 0 44 44" aria-hidden="true"><rect width="44" height="44" fill="#0d1713"/><path d="M0 30c8-4 14 3 22 0s14-4 22 0v14H0z" fill="#3f9479"/><circle cx="15" cy="20" r="5" fill="#ece6d6"/><circle cx="29" cy="17" r="8" fill="#2a1a12" stroke="#c8693a" stroke-width="2"/></svg>';
 
   function svg(name) { return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ICON[name] + '</svg>'; }
   function isHere(href) { return href.split('#')[0] === here && href.indexOf('#') < 0; }
@@ -69,7 +68,7 @@
   doc.body.insertAdjacentHTML('beforeend',
     '<footer class="foot"><div class="foot__inner">' +
     '<div><p class="foot__word">SentinelGel</p><p style="margin-top:.5rem;max-width:36ch">A drinkable throat coating that releases its buffer only when acid arrives. Conrad Challenge 2026–27, Health &amp; Nutrition.</p></div>' +
-    '<div><h2>Project</h2><ul><li><a href="innovation.html">Description</a></li><li><a href="impact.html">Impact</a></li><li><a href="team.html">Team</a></li></ul></div>' +
+    '<div><h2>Project</h2><ul><li><a href="innovation.html">Description</a></li><li><a href="impact.html">Impact</a></li></ul></div>' +
     '<div><h2>Lab</h2><ul><li><a href="science.html">Formulation</a></li><li><a href="testing.html">Testing</a></li><li><a href="testing.html#safety">Safety</a></li></ul></div>' +
     '</div><div class="foot__legal"><p>SentinelGel is a student concept in development. It is not a medical product and nothing here is medical advice. Site layout adapted from the <a href="https://gitlab.igem.org/2026/gems-taiwan">GEMS Taiwan iGEM 2026 wiki</a>, CC BY 4.0.</p></div></footer>');
 

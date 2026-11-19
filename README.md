@@ -19,7 +19,6 @@ A static site with no build step. Open `index.html` in a browser, or turn on Git
 | `science.html` | Formulation and comparison |
 | `testing.html` | Test plan, open questions, safety |
 | `impact.html` | Intended impact |
-| `team.html` | Team (placeholders to fill in) |
 | `assets/site.css` | All styles and design tokens |
 | `assets/site.js` | Navigation, footer, scroll effects, pH demo |
 
@@ -27,7 +26,6 @@ The navigation and footer are defined once, in `assets/site.js` (`NAV` at the to
 
 ### Still to fill in
 
-- `team.html`: team name, members, photos, coach. Search the repo for `[TEAM NAME]` and `To fill in`.
 - Hero photograph (optional). The home page opens on an illustration. To use a team photo instead, save it as `assets/hero.jpg` and add `style="--hero-photo: url(assets/hero.jpg)"` to the `<header class="hero">` tag in `index.html`.
 
 ## Credits
