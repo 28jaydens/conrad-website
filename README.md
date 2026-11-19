@@ -26,7 +26,7 @@ The navigation and footer are defined once, in `assets/site.js` (`NAV` at the to
 
 ### Still to fill in
 
-- Scroll film. The clip under the home page hero is a set of numbered stills in `assets/frames/hero/` (`ezgif-frame-001.jpg` onward, the naming EZGif's video-to-JPG tool uses), drawn to a canvas as the page scrolls. The clip was generated in Google Flow (still with Nano Banana, motion with Veo) and is kept as `assets/frames/hero-source.mp4`. To swap it, replace the stills and set `data-count` on `<section class="film">` in `index.html` to the number of stills; `data-count="0"` hides the section.
+- Scroll film. The clip under the home page hero is a set of numbered stills in `assets/frames/gel/` (`ezgif-frame-001.webp` onward, the numbering EZGif's video-to-frames tool uses), drawn to a canvas as the page scrolls. It is two clips generated in Google Flow with Veo 3.1 Fast (liquid setting into a gel, then acid arriving and the beads releasing), joined with a short dissolve and kept as `assets/frames/gel-source.mp4`. To swap it, replace the stills and set `data-count` and `data-ext` on `<section class="film">` in `index.html`; each caption's `data-at` is the point (0 to 1) where it appears, and `data-count="0"` hides the section. `assets/frames/hero/` and `hero-source.mp4` are the first version of the film and are no longer used.
 - Hero photograph (optional). The home page opens on an illustration. To use a team photo instead, save it as `assets/hero.jpg` and add `style="--hero-photo: url(assets/hero.jpg)"` to the `<header class="hero">` tag in `index.html`.
 
 ## Credits

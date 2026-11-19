@@ -184,7 +184,8 @@
       var p = span > 0 ? clamp(-r.top / span) : 0;
       film.style.setProperty('--fp', p.toFixed(4));
       want = Math.round(p * (fN - 1));
-      var c = Math.min(caps.length - 1, Math.floor(p * caps.length));
+      var c = 0;
+      caps.forEach(function (li, n) { if (p >= (li.dataset.at ? +li.dataset.at : n / caps.length)) c = n; });
       caps.forEach(function (li, n) { li.classList.toggle('on', n === c); });
       if (want !== shown) fDraw();
     }

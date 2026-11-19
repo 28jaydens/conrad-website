@@ -567,22 +567,20 @@ tr.is-us td:first-child { box-shadow: inset 4px 0 0 var(--gel-700); }
 /* ===================================================================== film
    A generated clip, cut into stills and scrubbed by the scroll (see site.js).
    The section is tall; the stage sticks while the stills play through. */
-.film { position: relative; height: 340vh; background: #fff; }
+.film { position: relative; height: 560vh; background: #fff; }
 .film[hidden] { display: none; }
-.film__stage { position: sticky; top: var(--nav-h); height: calc(100svh - var(--nav-h)); overflow: hidden; display: flex; flex-direction: column; align-items: center; }
-/* the stills have a white ground, so the picture sits on the page with no frame; it hangs from the top edge */
-.film__canvas { flex: none; display: block; width: min(100%, calc((100svh - var(--nav-h)) * .7 * 1272 / 708)); aspect-ratio: 1272 / 708; -webkit-mask-image: linear-gradient(180deg, #000 86%, transparent); mask-image: linear-gradient(180deg, #000 86%, transparent); }
-.film__caps { flex: none; width: 100%; max-width: 46rem; margin: clamp(.5rem, 2.5vh, 1.75rem) auto 0; padding: 0 var(--sp-5); list-style: none; display: grid; text-align: center; }
-.film__caps li { grid-area: 1 / 1; font-family: var(--font-display); font-size: clamp(1.25rem, 1rem + 1.5vw, 2.125rem); line-height: 1.2; color: var(--gel-900); opacity: 0; transform: translateY(14px); transition: opacity .5s ease, transform .7s var(--ease); }
+.film__stage { position: sticky; top: var(--nav-h); height: calc(100svh - var(--nav-h)); overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1rem var(--sp-5); }
+/* the picture is shown as a plate: as large as the screen allows with room for its caption */
+.film__canvas { flex: none; display: block; width: min(100%, 1180px, calc((100svh - var(--nav-h) - 13rem) * 1272 / 708)); aspect-ratio: 1272 / 708; border-radius: 14px; background: var(--gel-50); box-shadow: 0 0 0 1px var(--gel-200), 0 24px 60px -30px rgb(16 57 47 / .35); }
+.film__caps { flex: none; width: 100%; max-width: 46rem; margin: clamp(.9rem, 2.5vh, 1.6rem) auto 0; list-style: none; padding: 0; display: grid; text-align: center; }
+.film__caps li { grid-area: 1 / 1; font-family: var(--font-display); font-size: clamp(1.125rem, .95rem + 1.1vw, 1.75rem); line-height: 1.22; color: var(--gel-900); opacity: 0; transform: translateY(12px); transition: opacity .45s ease, transform .6s var(--ease); }
 .film__caps li.on { opacity: 1; transform: none; }
 .film__caps b { display: block; font-style: italic; font-weight: 500; color: var(--gel-700); }
-.film__bar { flex: none; position: relative; width: min(220px, 50vw); height: 2px; margin-top: clamp(.9rem, 2.5vh, 1.5rem); background: var(--gel-200); border-radius: 2px; overflow: hidden; }
+.film__bar { flex: none; position: relative; width: min(220px, 50vw); height: 2px; margin-top: clamp(.8rem, 2vh, 1.25rem); background: var(--gel-200); border-radius: 2px; overflow: hidden; }
 .film__bar::after { content: ""; position: absolute; inset: 0; transform-origin: left; transform: scaleX(var(--fp, 0)); background: var(--gel-700); }
-/* reduced motion: one still, the three lines stacked, no scrubbing */
-.film--still { height: auto; padding-bottom: 3rem; }
+.film__note { flex: none; margin-top: .7rem; font-size: .75rem; color: var(--gray-500); text-align: center; }
+/* reduced motion: one still, the lines stacked, no scrubbing */
+.film--still { height: auto; padding: 2rem 0 3rem; }
 .film--still .film__stage { position: relative; top: 0; height: auto; }
-.film--still .film__caps li { grid-area: auto; font-size: 1.125rem; margin-top: .5rem; }
+.film--still .film__caps li { grid-area: auto; font-size: 1.0625rem; margin-top: .5rem; }
 .film--still .film__bar { display: none; }
-.film__note { flex: none; margin-top: .9rem; padding: 0 var(--sp-5); font-size: .75rem; color: var(--gray-500); text-align: center; }
-/* phones: the picture is short, so the group sits in the middle of the screen */
-@media (max-width: 859px) { .film__stage { justify-content: center; } .film__canvas { -webkit-mask-image: linear-gradient(180deg, transparent, #000 12%, #000 86%, transparent); mask-image: linear-gradient(180deg, transparent, #000 12%, #000 86%, transparent); } }
