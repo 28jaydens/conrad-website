@@ -10,7 +10,29 @@ A Conrad Challenge (Health & Nutrition) concept: a drinkable throat coating that
 
 ## Website
 
-`index.html` is a single self-contained page with a project overview and an interactive pH demo. Open it in any browser, or turn on GitHub Pages (Settings → Pages → deploy from the `main` branch) to host it.
+A static site with no build step. Open `index.html` in a browser, or turn on GitHub Pages (Settings → Pages → deploy from the `main` branch).
+
+| File | Page |
+| --- | --- |
+| `index.html` | Home: the problem, the five demands, how it works, the pH demo |
+| `innovation.html` | Description |
+| `science.html` | Formulation and comparison |
+| `testing.html` | Test plan, open questions, safety |
+| `impact.html` | Intended impact |
+| `team.html` | Team (placeholders to fill in) |
+| `assets/site.css` | All styles and design tokens |
+| `assets/site.js` | Navigation, footer, scroll effects, pH demo |
+
+The navigation and footer are defined once, in `assets/site.js` (`NAV` at the top of the file).
+
+### Still to fill in
+
+- `team.html`: team name, members, photos, coach. Search the repo for `[TEAM NAME]` and `To fill in`.
+- Hero photograph (optional). The home page opens on an illustration. To use a team photo instead, save it as `assets/hero.jpg` and add `style="--hero-photo: url(assets/hero.jpg)"` to the `<header class="hero">` tag in `index.html`.
+
+## Credits
+
+The site's layout system is adapted from the [GEMS Taiwan iGEM 2026 wiki](https://2026.igem.wiki/gems-taiwan/) ([source](https://gitlab.igem.org/2026/gems-taiwan)), shared under CC BY 4.0. Palette, figures and content are SentinelGel's own.
 
 ## Status
 

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Testing · SentinelGel</title>
+<meta name="description" content="How SentinelGel will be tested: five bench experiments, the open questions, and the safety rules we work under.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..800&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<main>
+<header class="pagehead"><div class="pagehead__inner">
+  <p class="pagehead__eyebrow"><a href="index.html">SentinelGel</a><i>/</i>Lab</p>
+  <h1 class="pagehead__title">How we'll test it</h1>
+  <p class="pagehead__lede">Lab models and animal tissue first; anything swallowed by people waits for supervision and ethics approval.</p>
+</div></header>
+
+<div class="pagewrap">
+  <aside class="toc" aria-label="On this page"></aside>
+  <article class="prose">
+
+    <section id="plan">
+      <h2>The bench plan</h2>
+      <p>Each experiment checks one claim the design makes, in the order the claims depend on one another.</p>
+      <ol class="rows">
+        <li><b>1</b><div><h3>Tune the gel</h3><p>Find the poloxamer % that stays liquid when cool and gels near 37 °C (tilt-tube test).</p></div></li>
+        <li><b>2</b><div><h3>Make the beads</h3><p>Ionic gelation of chitosan into alginate with Mg(OH)₂; check size under a microscope.</p></div></li>
+        <li><b>3</b><div><h3>Release test</h3><p>Track pH of beads in pH 7 vs pH 2 buffers: quiet at 7, fast rise at 2.</p></div></li>
+        <li><b>4</b><div><h3>Adhesion test</h3><p>Coat pig esophagus or mucin plates, run simulated saliva over it, measure what stays.</p></div></li>
+        <li><b>5</b><div><h3>Acid challenge</h3><p>HCl + pepsin on coated vs uncoated tissue; compare damage with Evans blue dye.</p></div></li>
+      </ol>
+    </section>
+
+    <section id="success">
+      <h2>What each test has to show</h2>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Claim</th><th>Test</th><th>What we expect to see</th></tr></thead>
+        <tbody>
+          <tr><td>Drinkable, then a gel</td><td>Tilt-tube</td><td>Flows when cool; holds in the tube near 37 °C.</td></tr>
+          <tr><td>Responds only to acid</td><td>Release test</td><td>Quiet at pH 7; a fast pH rise at pH 2.</td></tr>
+          <tr><td>Stays on wet tissue</td><td>Adhesion test</td><td>Coating still present after simulated saliva runs over it.</td></tr>
+          <tr><td>Protects the lining</td><td>Acid challenge</td><td>Less Evans blue staining on coated tissue than on uncoated.</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section id="open">
+      <h2>Open questions</h2>
+      <p>These are the things we do not know yet, and the tests above are built to find out.</p>
+      <ul>
+        <li><b>Gelling too early.</b> The mouth is warm too. The gel has to set in the throat and esophagus, not on the tongue.</li>
+        <li><b>Buffer capacity.</b> How much acid one dose can neutralize, and for how many reflux events.</li>
+        <li><b>Catechol shelf life.</b> Catechol groups oxidize over time, which could weaken the adhesion in a stored bottle.</li>
+        <li><b>Shellfish-free chitosan.</b> Most chitosan comes from shellfish; an allergy-safe source matters for a drink.</li>
+      </ul>
+    </section>
+
+    <section id="safety">
+      <h2>Safety and ethics</h2>
+      <p>All of our testing uses lab models and animal tissue. Nothing is swallowed by a person until there is qualified supervision and ethics approval for it.</p>
+      <div class="callout"><b>Please note</b>SentinelGel is a student concept. It is not a medical product, and nothing on this site is medical advice.</div>
+    </section>
+
+  </article>
+</div>
+
+<nav class="pagenext" aria-label="Next page"><a href="impact.html"><small>Next</small><b>Impact</b></a></nav>
+</main>
+<script src="assets/site.js"></script>
+</body>
+</html>
