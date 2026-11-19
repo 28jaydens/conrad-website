@@ -32,7 +32,7 @@
       { t: 'Testing', href: 'testing.html', i: 'check' },
       { t: 'Safety', href: 'testing.html#safety', i: 'shield' } ] }
   ];
-  var LOGO = '<svg class="sitenav__logo" viewBox="0 0 44 44" aria-hidden="true"><rect width="44" height="44" fill="#0d1713"/><path d="M0 30c8-4 14 3 22 0s14-4 22 0v14H0z" fill="#3f9479"/><circle cx="15" cy="20" r="5" fill="#ece6d6"/><circle cx="29" cy="17" r="8" fill="#2a1a12" stroke="#c8693a" stroke-width="2"/></svg>';
+  var LOGO = '<svg class="sitenav__logo" viewBox="0 0 44 44" aria-hidden="true"><rect width="44" height="44" fill="#e2f3ec"/><path d="M0 30c8-4 14 3 22 0s14-4 22 0v14H0z" fill="#3fae8c"/><circle cx="15" cy="20" r="5" fill="#fff" stroke="#1a7a63" stroke-width="2"/><circle cx="29" cy="17" r="8" fill="#fbe9dc" stroke="#e07a3c" stroke-width="2"/></svg>';
 
   function svg(name) { return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ICON[name] + '</svg>'; }
   function isHere(href) { return href.split('#')[0] === here && href.indexOf('#') < 0; }
@@ -111,6 +111,7 @@
 
   /* ----------------------------------------------------------------- rise */
   var io = 'IntersectionObserver' in window;
+  doc.querySelectorAll('.prose > section, .eyebrow, .pagenext').forEach(function (el) { el.classList.add('rise'); });
   var rises = doc.querySelectorAll('.rise');
   if (io && !reduce) {
     var ro = new IntersectionObserver(function (es) {
@@ -119,6 +120,85 @@
     rises.forEach(function (el) {
       if (el.getBoundingClientRect().top > window.innerHeight * .9) { el.classList.add('is-armed'); ro.observe(el); }
     });
+  }
+
+  /* ------------------------------------------------- scroll-driven motion
+     One passive listener writes a few custom properties and CSS does the rest:
+       --sy  on <html>: pixels scrolled (the hero's parallax)
+       --sp  on <html>: 0 to 1 down the whole page (the progress line)
+       --p   on [data-scrub]: 0 as it enters at the bottom, 1 as it leaves at the top
+       --e   on [data-scrub]: 0 to 1 over its first three quarters of a screen
+     With reduced motion nothing is written and every rule falls back to rest. */
+  doc.body.insertAdjacentHTML('beforeend', '<div class="progress" aria-hidden="true"></div>');
+  var scrubs = doc.querySelectorAll('[data-scrub]');
+  function clamp(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
+  function onScroll() {
+    var y = window.scrollY, vh = window.innerHeight, max = root.scrollHeight - vh;
+    root.style.setProperty('--sy', Math.min(y, 1400).toFixed(0));
+    root.style.setProperty('--sp', max > 0 ? clamp(y / max).toFixed(4) : 0);
+    scrubs.forEach(function (el) {
+      var r = el.getBoundingClientRect();
+      if (r.bottom < -200 || r.top > vh + 200) return;
+      el.style.setProperty('--p', clamp((vh - r.top) / (vh + r.height)).toFixed(4));
+      el.style.setProperty('--e', clamp((vh - r.top) / (vh * .75)).toFixed(4));
+    });
+  }
+  if (!reduce) {
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    onScroll();
+  }
+
+  /* ----------------------------------------------------------------- film
+     A clip cut into numbered stills (ezgif-frame-001.jpg ...) and drawn to a
+     canvas, one still per scroll position. Stays hidden while data-count is 0. */
+  var film = doc.querySelector('.film');
+  if (film && +film.dataset.count > 0) {
+    film.hidden = false;
+    var fN = +film.dataset.count, fBase = film.dataset.frames, fExt = film.dataset.ext || 'jpg';
+    var cv = film.querySelector('canvas'), cx = cv.getContext('2d');
+    var caps = film.querySelectorAll('.film__caps li'), frames = [], shown = -1, want = 0;
+    function fSrc(i) { return fBase + ('00' + (i + 1)).slice(-3) + '.' + fExt; }
+    function fDraw() {
+      /* nearest still that has arrived, so a slow connection never shows a blank */
+      var i = want, d = 0, img = null;
+      while (d < fN) {
+        var a = frames[i - d], b = frames[i + d];
+        if (a && a.ok) { img = a; break; }
+        if (b && b.ok) { img = b; break; }
+        d++;
+      }
+      if (!img) return;
+      var w = cv.width, h = cv.height, s = Math.max(w / img.naturalWidth, h / img.naturalHeight);
+      var dw = img.naturalWidth * s, dh = img.naturalHeight * s;
+      cx.drawImage(img, (w - dw) / 2, (h - dh) / 2, dw, dh);
+      shown = want;
+    }
+    function fSize() {
+      var r = cv.getBoundingClientRect(), k = Math.min(window.devicePixelRatio || 1, 2);
+      cv.width = Math.round(r.width * k); cv.height = Math.round(r.height * k);
+      shown = -1; fDraw();
+    }
+    function fScroll() {
+      var r = film.getBoundingClientRect(), span = r.height - window.innerHeight;
+      var p = span > 0 ? clamp(-r.top / span) : 0;
+      film.style.setProperty('--fp', p.toFixed(4));
+      want = Math.round(p * (fN - 1));
+      var c = Math.min(caps.length - 1, Math.floor(p * caps.length));
+      caps.forEach(function (li, n) { li.classList.toggle('on', n === c); });
+      if (want !== shown) fDraw();
+    }
+    for (var f = 0; f < fN; f++) (function (n) {
+      var im = new Image();
+      im.decoding = 'async';
+      im.onload = function () { im.ok = true; if (shown === -1 || n === want) fDraw(); };
+      im.src = fSrc(n);
+      frames[n] = im;
+    })(f);
+    if (reduce) { film.classList.add('film--still'); want = fN - 1; caps.forEach(function (li) { li.classList.add('on'); }); }
+    else { window.addEventListener('scroll', fScroll, { passive: true }); }
+    window.addEventListener('resize', function () { fSize(); if (!reduce) fScroll(); });
+    fSize(); if (!reduce) fScroll();
   }
 
   /* -------------------------------------------------------------- scrolly */
@@ -142,7 +222,7 @@
   var dots = doc.querySelector('.dots');
   if (dots) {
     var on = [3, 9, 19, 22, 34], h = '';
-    for (var i = 0; i < 35; i++) h += '<i' + (on.indexOf(i) > -1 ? ' class="on"' : '') + '></i>';
+    for (var i = 0; i < 35; i++) h += '<i' + (on.indexOf(i) > -1 ? ' class="on" style="--n:' + on.indexOf(i) + '"' : '') + '></i>';
     dots.innerHTML = h;
   }
 
