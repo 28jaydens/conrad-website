@@ -185,10 +185,37 @@
       film.style.setProperty('--fp', p.toFixed(4));
       want = Math.round(p * (fN - 1));
       var c = 0;
-      caps.forEach(function (li, n) { if (p >= (li.dataset.at ? +li.dataset.at : n / caps.length)) c = n; });
+      ats.forEach(function (a, n) { if (p >= a) c = n; });
       caps.forEach(function (li, n) { li.classList.toggle('on', n === c); });
+      segs.forEach(function (b, n) {
+        var end = n + 1 < ats.length ? ats[n + 1] : 1;
+        b.style.setProperty('--sf', clamp((p - ats[n]) / (end - ats[n])).toFixed(4));
+        b.classList.toggle('on', n === c);
+        if (n === c) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current');
+      });
       if (want !== shown) fDraw();
     }
+    /* one segment per caption: each fills as its part of the film plays, and jumps there on click */
+    var ats = [], segs = [], bar = film.querySelector('.film__bar');
+    caps.forEach(function (li, n) {
+      ats[n] = li.dataset.at ? +li.dataset.at : n / caps.length;
+      var k = doc.createElement('span');
+      k.className = 'film__step';
+      k.textContent = 'Step ' + (n + 1) + ' of ' + caps.length;
+      li.insertBefore(k, li.firstChild);
+      if (!bar) return;
+      var b = doc.createElement('button');
+      b.type = 'button';
+      b.className = 'film__seg';
+      b.innerHTML = '<i></i><span>' + (n + 1) + '. ' + (li.dataset.label || '') + '</span>';
+      b.addEventListener('click', function () {
+        var span = film.offsetHeight - window.innerHeight;
+        window.scrollTo({ top: film.getBoundingClientRect().top + window.pageYOffset + ats[n] * span + 2, behavior: 'smooth' });
+      });
+      bar.appendChild(b);
+      segs.push(b);
+    });
+    if (bar) { bar.removeAttribute('aria-hidden'); bar.setAttribute('role', 'group'); bar.setAttribute('aria-label', 'Parts of the film'); }
     for (var f = 0; f < fN; f++) (function (n) {
       var im = new Image();
       im.decoding = 'async';
